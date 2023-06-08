@@ -1,10 +1,10 @@
-package com.devb.usermanagement;
+package com.devb.book_store;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserManagementApplicationTests {
+class BookStoreApplicationTests {
 
 	@Test
 	void contextLoads() {

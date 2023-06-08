@@ -1,13 +1,19 @@
 package com.devb.usermanagement;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
+
 @SpringBootApplication
-public class UserManagementApplication {
+public class UserManagement {
+	
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserManagementApplication.class, args);
+		SpringApplication.run(UserManagement.class, args);
 	}
+
+	
 
 }
