@@ -1,6 +1,6 @@
 package com.devb.usermanagement.entity;
 
-public class UserRequest {
+public class UserRegistrationRequest {
 
 	private String firstName;
 	private String lastName;
@@ -39,7 +39,7 @@ public class UserRequest {
 		this.password = password;
 	}
 
-	public UserRequest(String firstName, String lastName, String email, String password) {
+	public UserRegistrationRequest(String firstName, String lastName, String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -47,7 +47,7 @@ public class UserRequest {
 		this.password = password;
 	}
 
-	public UserRequest() {
+	public UserRegistrationRequest() {
 
 	}
 
