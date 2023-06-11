@@ -1,6 +1,8 @@
 package com.devb.usermanagement.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +19,18 @@ public class UserApp {
 	private String lastName;
 	private String email;
 	private String passw;
+	
+	
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
 	
 	public Integer getId() {
 		return id;
