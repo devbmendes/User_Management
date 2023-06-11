@@ -16,14 +16,11 @@ import lombok.AllArgsConstructor;
 
 public class SecurityConfig {
 	
+	private JwtRequestFilter jwtRequestFilter;
+	private AuthenticationProvider authenticationProvider;
+	
 	@SuppressWarnings("removal")
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		
-	    final JwtRequestFilter jwtRequestFilter = null;
-		final AuthenticationProvider authenticationProvider = null;
-		
-		
 		
 		http
 		.csrf().disable()
@@ -39,7 +36,6 @@ public class SecurityConfig {
 		.authenticationProvider(authenticationProvider)
 		.addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class);
 
-		
 		return http.build();
 	}
 }
