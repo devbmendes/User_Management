@@ -8,6 +8,6 @@ import com.devb.usermanagement.entity.UserApp;
 
 public interface UserAppRepository extends JpaRepository<UserApp, Integer>{
 	
-	Optional<UserApp>  findByEmail(String email);
+	Optional<UserApp> findByEmail(String email);
 
 }
