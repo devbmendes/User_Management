@@ -1,4 +1,4 @@
-package com.devb.usermanagement.entity;
+package com.devb.usermanagement.entity.user;
 
 public class UserRegistrationRequest {
 
