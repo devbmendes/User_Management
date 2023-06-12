@@ -1,12 +1,9 @@
-package com.devb.usermanagement.controller;
+package com.devb.usermanagement.entity.auth;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.devb.usermanagement.entity.user.UserAuthRequest;
-import com.devb.usermanagement.entity.user.UserRegistrationRequest;
 
 @RestController
 @RequestMapping("/v1/auth")

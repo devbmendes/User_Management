@@ -1,4 +1,4 @@
-package com.devb.usermanagement.entity.user;
+package com.devb.usermanagement.entity.auth;
 
 public class UserResponse {
 

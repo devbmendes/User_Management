@@ -29,8 +29,6 @@ public class UserApp implements UserDetails{
 	private String email;
 	private String passw;
 	
-	
-	
 	public Role getRole() {
 		return role;
 	}
