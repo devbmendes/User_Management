@@ -6,6 +6,7 @@ public class UserResponse {
 	public String fullName;
 	public String email;
 	public String role;
+	
 	public Integer getId() {
 		return id;
 	}

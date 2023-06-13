@@ -31,16 +31,16 @@ public class JwtService {
 		 return claimResolver.apply(claims);
 	}
 	
-	public String generateToken(UserDetails userDetails) {
-		return generateToken(new HashMap<>(), userDetails);
+	public String generateToken(String email) {
+		return generateToken(new HashMap<>(), email);
 	}
 	
 	public String generateToken(
 			Map<String, Object> extraClaims, 
-			UserDetails userDetails) {
+			String email) {
 		return Jwts.builder()
 				.setClaims(extraClaims)
-				.setSubject(userDetails.getUsername())
+				.setSubject(email)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 *24))
 				.signWith(getSignInKey(), SignatureAlgorithm.HS256)

@@ -1,10 +1,22 @@
 package com.devb.usermanagement.entity.auth;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 public class UserRegistrationRequest {
 
+	@NotEmpty
+	@NotBlank
 	private String firstName;
+	@NotEmpty
+	@NotBlank
 	private String lastName;
+	@Email
 	private String email;
+	@NotEmpty
+	@NotBlank
+	//@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$@!%&*?])[A-Za-z\\d#$@!%&*?]{8,}$")
 	private String password;
 
 	public String getFirstName() {

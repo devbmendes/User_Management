@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.devb.usermanagement.UserManagement;
 import com.devb.usermanagement.entity.Author;
 import com.devb.usermanagement.entity.Category;
+import com.devb.usermanagement.entity.auth.AuthService;
+import com.devb.usermanagement.entity.auth.UserRegistrationRequest;
 import com.devb.usermanagement.repository.AuthorRepositoy;
 import com.devb.usermanagement.repository.CategoryRepository;
 
@@ -19,11 +21,13 @@ public class UserManagement implements CommandLineRunner {
 
 	private final AuthorRepositoy repositoy;
 	private final CategoryRepository categoryRepository;
+	private final AuthService authService;
 	
-	public UserManagement(AuthorRepositoy repositoy, CategoryRepository categoryRepository) {
+	public UserManagement(AuthorRepositoy repositoy, CategoryRepository categoryRepository, AuthService authService) {
 		super();
 		this.repositoy = repositoy;
 		this.categoryRepository = categoryRepository;
+		this.authService = authService;
 	}
 
 	public static void main(String[] args) {
@@ -51,6 +55,8 @@ public class UserManagement implements CommandLineRunner {
 		categoryRepository.save(category2);
 		categoryRepository.save(category3);
 		categoryRepository.save(category4);
+		
+		authService.save(new UserRegistrationRequest("Balduino","Mendes","baldhuino@gmail.com","balduino"));
 	}
 
 }
