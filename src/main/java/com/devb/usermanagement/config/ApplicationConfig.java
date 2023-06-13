@@ -1,5 +1,7 @@
 package com.devb.usermanagement.config;
 
+import java.util.Optional;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.devb.usermanagement.repository.UserAppRepository;
+import com.devb.usermanagement.entity.auth.UserApp;
+import com.devb.usermanagement.entity.auth.UserAppDetails;
+import com.devb.usermanagement.entity.auth.UserAppRepository;
 import com.devb.usermanagement.service.exception.ObjectNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -29,8 +33,12 @@ public class ApplicationConfig {
 			
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				return userAppRepository.findByEmail(username).orElseThrow(()->
-				new ObjectNotFoundException("User not Found"));
+				Optional<UserApp> usOptional = userAppRepository.findByEmail(username);
+				if(usOptional.isPresent()) {
+					throw new ObjectNotFoundException("User not FOUND");
+				}
+				return new UserAppDetails(usOptional.get());
+				
 			}
 		};
 	}

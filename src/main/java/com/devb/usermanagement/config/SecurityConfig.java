@@ -9,36 +9,28 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-		
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-		
-		private JwtRequestFilter jwtRequestFilter;
-		private AuthenticationProvider authenticationProvider;
-		
-		public SecurityConfig(JwtRequestFilter jwtRequestFilter, AuthenticationProvider authenticationProvider) {
-			this.jwtRequestFilter = jwtRequestFilter;
-			this.authenticationProvider = authenticationProvider;
-		}
-	    
-	    @Bean
-	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        
-	    	return http
-	                .authorizeHttpRequests(auth -> auth
-	                   .requestMatchers("/swagger-ui/*",
-	                		   "/v1/store/author/all",
-	                		   "/v1/auth/login",
-	                		   "/v1/auth/register",
-	                		   "/h2**").permitAll()
-	                )
-	                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	                .authenticationProvider(authenticationProvider)
-	                .addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class)
-	                .build();
-	        }
-	
+
+	private final JwtRequestFilter jwtRequestFilter;
+	private final AuthenticationProvider authenticationProvider;
+
+	public SecurityConfig(JwtRequestFilter jwtRequestFilter, AuthenticationProvider authenticationProvider) {
+		this.jwtRequestFilter = jwtRequestFilter;
+		this.authenticationProvider = authenticationProvider;
+	}
+
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		return http
+				.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth.
+						requestMatchers("/v1/auth/register").permitAll())	
+				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authenticationProvider(authenticationProvider)
+				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
+
 }
-
-
