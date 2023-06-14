@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping("/all")
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<List<Author>> findAll() {
 		List<Author> listAuthors = authorService.getAll();
 		return ResponseEntity.status(HttpStatus.OK).body(listAuthors);
@@ -49,6 +51,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "201")
 	})
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Author> save(@Valid @RequestBody AuthorDTO authorDTO) {
 		Author author = authorService.save(authorDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(author);
@@ -58,6 +61,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> getById(@PathVariable Integer id) {
 		Author author = authorService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -68,6 +72,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> update(@PathVariable Integer id,@Valid @RequestBody AuthorDTO authorDTO) {
 		Author author = authorService.update(id, authorDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -78,6 +83,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> findByEMail(@RequestParam String email) {
 		Author author = authorService.findByEmail(email);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -88,6 +94,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "204")
 	})
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Author> delete(@PathVariable Integer id){
 		authorService.delete(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

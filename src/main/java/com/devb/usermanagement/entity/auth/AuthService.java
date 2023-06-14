@@ -1,5 +1,7 @@
 package com.devb.usermanagement.entity.auth;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +43,13 @@ public class AuthService {
 		return true;
 	}
 	
+	public UserApp checkEmail(String email){
+		Optional<UserApp> userApp = userAppRepository.findByEmail(email);
+		
+		return userApp.orElseThrow(
+				()-> new DataIntegratyViolationException("Email already exist"));
+	}
+	
 	public UserResponse save(UserRegistrationRequest userRegistrationRequest) {
 		
 		checkUser(userRegistrationRequest);
@@ -49,9 +58,10 @@ public class AuthService {
 		uApp.setFirstName(userRegistrationRequest.getFirstName());
 		uApp.setLastName(userRegistrationRequest.getLastName());
 		uApp.setPassw(passwordEncoder.encode(userRegistrationRequest.getPassword()));
-		uApp.setRole(Role.USER);
+		uApp.setRole(Role.ADMIN);
 		UserApp respApp = userAppRepository.save(uApp);
-		return new UserResponse(respApp.getId(),respApp.getFirstName()+ " "+respApp.getLastName(),respApp.getEmail(),respApp.getRole().name());
+		return new UserResponse(respApp.getId(),respApp.getFirstName()+ " "+respApp.getLastName(),
+				respApp.getEmail(),respApp.getRole().name());
 	}
 	
 	public LoginResponse login (UserAuthRequest userAuthRequest) {
@@ -62,6 +72,15 @@ public class AuthService {
 		 }else {
 			 throw new DataIntegratyViolationException("Credentials invalid");
 		 }
+	}
+	public List<UserResponse> getAll(){
+		List<UserApp> list = userAppRepository.findAll();
+		List<UserResponse> listResponse = new ArrayList<>();
+		list.forEach(resp -> {
+			listResponse.add(new UserResponse(resp.getId(),resp.getFirstName()+ " "+resp.getLastName(),resp.getEmail(),
+					resp.getRole().name()));
+		});
+		return listResponse;
 	}
 
 }

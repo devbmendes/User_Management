@@ -1,8 +1,12 @@
 package com.devb.usermanagement.entity.auth;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,12 @@ public class UserController {
 	public ResponseEntity<LoginResponse> authentication(@RequestBody UserAuthRequest userAuth) {
 		LoginResponse loginResponse = authService.login(userAuth);
 		return ResponseEntity.ok(loginResponse);
+	}
+	@GetMapping("/all")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public ResponseEntity<List<UserResponse>> getAll(){
+		List<UserResponse> list = authService.getAll();
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 
 }
