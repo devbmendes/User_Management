@@ -3,14 +3,17 @@ package com.devb.usermanagement.entity.auth;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class UserRegistrationRequest {
 
 	@NotEmpty
 	@NotBlank
+	@Size(min = 2, max = 50)
 	private String firstName;
 	@NotEmpty
 	@NotBlank
+	@Size(min = 2, max = 50)
 	private String lastName;
 	@Email
 	private String email;

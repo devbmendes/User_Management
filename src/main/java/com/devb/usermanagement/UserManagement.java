@@ -4,11 +4,15 @@ package com.devb.usermanagement;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.devb.usermanagement.UserManagement;
 import com.devb.usermanagement.entity.Author;
 import com.devb.usermanagement.entity.Category;
+import com.devb.usermanagement.entity.Role;
 import com.devb.usermanagement.entity.auth.AuthService;
+import com.devb.usermanagement.entity.auth.UserApp;
+import com.devb.usermanagement.entity.auth.UserAppRepository;
 import com.devb.usermanagement.entity.auth.UserRegistrationRequest;
 import com.devb.usermanagement.repository.AuthorRepositoy;
 import com.devb.usermanagement.repository.CategoryRepository;
@@ -22,12 +26,17 @@ public class UserManagement implements CommandLineRunner {
 	private final AuthorRepositoy repositoy;
 	private final CategoryRepository categoryRepository;
 	private final AuthService authService;
+	private final UserAppRepository userAppRepository;
+	private final PasswordEncoder encoder;
 	
-	public UserManagement(AuthorRepositoy repositoy, CategoryRepository categoryRepository, AuthService authService) {
+	public UserManagement(AuthorRepositoy repositoy, CategoryRepository categoryRepository, AuthService authService,
+			UserAppRepository userAppRepository,PasswordEncoder encoder) {
 		super();
 		this.repositoy = repositoy;
 		this.categoryRepository = categoryRepository;
 		this.authService = authService;
+		this.userAppRepository = userAppRepository;
+		this.encoder = encoder;
 	}
 
 	public static void main(String[] args) {
@@ -56,7 +65,12 @@ public class UserManagement implements CommandLineRunner {
 		categoryRepository.save(category3);
 		categoryRepository.save(category4);
 		
-		authService.save(new UserRegistrationRequest("Balduino","Mendes","baldhuino@gmail.com","balduino"));
+		authService.save(new UserRegistrationRequest("julio","Correia","julio@gmail.com","juliocorreia"));
+		UserApp userApp = new UserApp(null, "Balduino", "Mendes", "baldhuino@gmail.com",
+				encoder.encode("balduinomendes"));
+		userApp.setRole(Role.ADMIN);
+		userAppRepository.save(userApp);
+		
 	}
 
 }

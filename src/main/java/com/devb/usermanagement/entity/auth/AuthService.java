@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.devb.usermanagement.entity.Role;
 import com.devb.usermanagement.service.JwtService;
 import com.devb.usermanagement.service.exception.DataIntegratyViolationException;
+import com.devb.usermanagement.service.exception.ObjectNotFoundException;
 
 @Service
 public class AuthService {
@@ -58,7 +59,7 @@ public class AuthService {
 		uApp.setFirstName(userRegistrationRequest.getFirstName());
 		uApp.setLastName(userRegistrationRequest.getLastName());
 		uApp.setPassw(passwordEncoder.encode(userRegistrationRequest.getPassword()));
-		uApp.setRole(Role.ADMIN);
+		uApp.setRole(Role.USER);
 		UserApp respApp = userAppRepository.save(uApp);
 		return new UserResponse(respApp.getId(),respApp.getFirstName()+ " "+respApp.getLastName(),
 				respApp.getEmail(),respApp.getRole().name());
@@ -81,6 +82,23 @@ public class AuthService {
 					resp.getRole().name()));
 		});
 		return listResponse;
+	}
+	
+	public UserApp findById(Integer id) {
+		Optional<UserApp> userOptional = userAppRepository.findById(id);
+		return userOptional.orElseThrow(()->
+			new ObjectNotFoundException("USER not FOUND"));
+	}
+	
+	public UserResponse update(Integer id, UserRegistrationRequest userRegistrationRequest) {
+		
+		Optional<UserApp> userApp = userAppRepository.findById(id);
+		return null;
+	}
+	public void deleteUser(Integer id) {
+		
+		UserApp usOptional = findById(id);
+		userAppRepository.delete(usOptional);
 	}
 
 }

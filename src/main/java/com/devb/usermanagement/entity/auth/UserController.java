@@ -30,7 +30,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> authentication(@RequestBody UserAuthRequest userAuth) {
+	public ResponseEntity<LoginResponse> authentication(
+		@Valid @RequestBody UserAuthRequest userAuth) {
 		LoginResponse loginResponse = authService.login(userAuth);
 		return ResponseEntity.ok(loginResponse);
 	}
