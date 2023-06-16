@@ -88,20 +88,23 @@ public class AuthService {
 		return userOptional.orElseThrow(() -> new ObjectNotFoundException("USER not FOUND"));
 	}
 
-	public UserResponse update(Integer id, UserRegistrationRequest userRegistrationRequest) {
+	public UserResponse updateRole(Integer id) {
 
-		Optional<UserApp> userApp = userAppRepository.findById(id);
-		return null;
+		UserApp userApp = findById(id);
+		if(userApp.getRole().toString().equals("USER")) {
+			userApp.setRole(Role.ADMIN);
+		}else {
+			userApp.setRole(Role.USER);
+		}
+		
+		UserApp respApp = userAppRepository.save(userApp);
+		return new UserResponse(respApp.getId(), respApp.getFirstName()+" "+respApp.getLastName(),
+				respApp.getEmail(), respApp.getRole().name());
 	}
 
-	public void deleteUser(Integer id, UserAuthRequest userAuthRequest) {
+	public void deleteUser(Integer id) {
 
 		UserApp usOptional = findById(id);
-		if((usOptional.getEmail()
-				.equalsIgnoreCase(userAuthRequest.getEmail()) && (usOptional.getPassw()
-						.equalsIgnoreCase(userAuthRequest.getPassword())))) {
 		userAppRepository.delete(usOptional);
 		}
-	}
-
 }

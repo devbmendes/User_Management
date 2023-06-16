@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.devb.usermanagement.service.exception.DataIntegratyViolationException;
 import com.devb.usermanagement.service.exception.ObjectNotFoundException;
+import com.devb.usermanagement.service.exception.Unauthorized;
 
 @RestControllerAdvice
 public class ResourceExceptionHandler {
@@ -28,6 +29,14 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(DataIntegratyViolationException.class)
 	public ResponseEntity<ResponseError> integrityViolation(DataIntegratyViolationException ex) {
 		ResponseError responseError = new ResponseError(LocalDate.now(), HttpStatus.BAD_REQUEST.value(),
+				ex.getMessage());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+
+	}
+	@ExceptionHandler(Unauthorized.class)
+	public ResponseEntity<ResponseError> unauthorized(Unauthorized ex) {
+		ResponseError responseError = new ResponseError(LocalDate.now(), HttpStatus.UNAUTHORIZED.value(),
 				ex.getMessage());
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
