@@ -40,7 +40,6 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping("/all")
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<List<Author>> findAll() {
 		List<Author> listAuthors = authorService.getAll();
 		return ResponseEntity.status(HttpStatus.OK).body(listAuthors);
@@ -51,7 +50,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "201")
 	})
 	@PostMapping
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Author> save(@Valid @RequestBody AuthorDTO authorDTO) {
 		Author author = authorService.save(authorDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(author);
@@ -61,7 +60,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping("/{id}")
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+	//@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> getById(@PathVariable Integer id) {
 		Author author = authorService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -72,7 +71,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@PutMapping("/{id}")
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+	//@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> update(@PathVariable Integer id,@Valid @RequestBody AuthorDTO authorDTO) {
 		Author author = authorService.update(id, authorDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -83,7 +82,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "200")
 	})
 	@GetMapping
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+	//@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<Author> findByEMail(@RequestParam String email) {
 		Author author = authorService.findByEmail(email);
 		return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -94,7 +93,7 @@ public class AuthorController {
 			@ApiResponse(responseCode = "204")
 	})
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Author> delete(@PathVariable Integer id){
 		authorService.delete(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
