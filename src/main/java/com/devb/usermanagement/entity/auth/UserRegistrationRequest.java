@@ -3,6 +3,7 @@ package com.devb.usermanagement.entity.auth;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class UserRegistrationRequest {
@@ -14,12 +15,17 @@ public class UserRegistrationRequest {
 	@NotEmpty
 	@NotBlank
 	@Size(min = 2, max = 50)
-	private String lastName;
+	private String lastName; 
 	@Email
 	private String email;
 	@NotEmpty
 	@NotBlank
-	//@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$@!%&*?])[A-Za-z\\d#$@!%&*?]{8,}$")
+	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message = "Password should include: "
+			+ "Has minimum 8 characters in length - "
+			+"At least one uppercase English letter - "
+			+"At least one lowercase English letter - "
+			+"At least one digit - "
+			+"At least one special character..")
 	private String password;
 
 	public String getFirstName() {

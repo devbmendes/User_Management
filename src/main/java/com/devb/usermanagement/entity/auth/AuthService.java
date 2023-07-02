@@ -3,6 +3,8 @@ package com.devb.usermanagement.entity.auth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +33,7 @@ public class AuthService {
 		this.authenticationManager = authenticationManager;
 		this.jwtService = jwtService;
 	}
-
+	
 	public boolean checkUser(UserRegistrationRequest userRegistrationRequest) {
 		Optional<UserApp> userApp = userAppRepository.findByEmail(userRegistrationRequest.getEmail());
 		Optional<UserApp> useOptional = userAppRepository.findByPassw(userRegistrationRequest.getPassword());
