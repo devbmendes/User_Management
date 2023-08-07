@@ -60,7 +60,7 @@ public class AuthService {
 		uApp.setPassw(passwordEncoder.encode(userRegistrationRequest.getPassword()));
 		uApp.setRole(Role.USER);
 		UserApp respApp = userAppRepository.save(uApp);
-		return new UserResponse(respApp.getId(), respApp.getFirstName() + " " + respApp.getLastName(),
+		return new UserResponse(respApp.getId(), respApp.getFirstName(),respApp.getLastName(),
 				respApp.getEmail(), respApp.getRole().name());
 	}
 
@@ -69,9 +69,9 @@ public class AuthService {
 				new UsernamePasswordAuthenticationToken(userAuthRequest.getEmail(), userAuthRequest.getPassword()));
 
 		if (authentication.isAuthenticated()) {
-			return new LoginResponse(authentication.getName(), jwtService.generateToken(authentication.getName()));
+			return new LoginResponse(authentication.getName(), jwtService.generateToken(authentication.getName()),authentication.getAuthorities().toString());
 		} else {
-			throw new DataIntegratyViolationException("Credentials invalid");
+			throw new DataIntegratyViolationException("Credentials Invalid");
 		}
 	}
 
@@ -79,7 +79,7 @@ public class AuthService {
 		List<UserApp> list = userAppRepository.findAll();
 		List<UserResponse> listResponse = new ArrayList<>();
 		list.forEach(resp -> {
-			listResponse.add(new UserResponse(resp.getId(), resp.getFirstName() + " " + resp.getLastName(),
+			listResponse.add(new UserResponse(resp.getId(), resp.getFirstName(),resp.getLastName(),
 					resp.getEmail(), resp.getRole().name()));
 		});
 		return listResponse;
@@ -100,7 +100,7 @@ public class AuthService {
 		}
 		
 		UserApp respApp = userAppRepository.save(userApp);
-		return new UserResponse(respApp.getId(), respApp.getFirstName()+" "+respApp.getLastName(),
+		return new UserResponse(respApp.getId(), respApp.getFirstName(),respApp.getLastName(),
 				respApp.getEmail(), respApp.getRole().name());
 	}
 

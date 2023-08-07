@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.devb.usermanagement.service.JwtService;
+import com.devb.usermanagement.service.exception.Unauthorized;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -52,6 +53,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				authToken.setDetails(
 						 new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
+			}else {
+				throw new Unauthorized("Token Expired");
 			}
 		}
 		filterChain.doFilter(request, response);
