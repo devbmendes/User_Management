@@ -27,6 +27,18 @@ public class UserRegistrationRequest {
 			+"At least one digit - "
 			+"At least one special character..")
 	private String password;
+	
+	private String role;
+	
+	
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -60,12 +72,13 @@ public class UserRegistrationRequest {
 		this.password = password;
 	}
 
-	public UserRegistrationRequest(String firstName, String lastName, String email, String password) {
+	public UserRegistrationRequest(String firstName, String lastName, String email, String password, String role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.role = role;
 	}
 
 	public UserRegistrationRequest() {

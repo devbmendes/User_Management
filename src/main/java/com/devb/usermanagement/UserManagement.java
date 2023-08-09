@@ -65,7 +65,7 @@ public class UserManagement implements CommandLineRunner {
 		categoryRepository.save(category3);
 		categoryRepository.save(category4);
 		
-		authService.save(new UserRegistrationRequest("julio","Correia","julio@gmail.com","Juliocorreia&10"));
+		authService.save(new UserRegistrationRequest("julio","Correia","julio@gmail.com","Juliocorreia&10","USER"));
 		UserApp userApp = new UserApp(null, "Balduino", "Mendes", "baldhuino@gmail.com",
 				encoder.encode("Balduino&mendes10"));
 		userApp.setRole(Role.ADMIN);

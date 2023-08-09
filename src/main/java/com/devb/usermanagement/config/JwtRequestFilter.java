@@ -35,6 +35,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			HttpServletResponse response, 
 			FilterChain filterChain)
 			throws ServletException, IOException {
+		if(request.getRequestURI().equals("/v1/auth/login")) {
+			System.out.println(request.getRequestURI());
+			
+		}
 		final String authHeader = request.getHeader("Authorization");
 		final String jwt;
 		final String userEmail;
@@ -53,8 +57,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				authToken.setDetails(
 						 new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
-			}else {
-				throw new Unauthorized("Token Expired");
 			}
 		}
 		filterChain.doFilter(request, response);

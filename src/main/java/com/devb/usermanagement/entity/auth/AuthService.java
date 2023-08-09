@@ -16,6 +16,7 @@ import com.devb.usermanagement.entity.Role;
 import com.devb.usermanagement.service.JwtService;
 import com.devb.usermanagement.service.exception.DataIntegratyViolationException;
 import com.devb.usermanagement.service.exception.ObjectNotFoundException;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy;
 
 @Service
 public class AuthService {
@@ -58,7 +59,12 @@ public class AuthService {
 		uApp.setFirstName(userRegistrationRequest.getFirstName());
 		uApp.setLastName(userRegistrationRequest.getLastName());
 		uApp.setPassw(passwordEncoder.encode(userRegistrationRequest.getPassword()));
-		uApp.setRole(Role.USER);
+		if(userRegistrationRequest.getRole().equalsIgnoreCase("ADMIN")) {
+			uApp.setRole(Role.ADMIN);
+		}else {
+			uApp.setRole(Role.USER);
+		}
+		
 		UserApp respApp = userAppRepository.save(uApp);
 		return new UserResponse(respApp.getId(), respApp.getFirstName(),respApp.getLastName(),
 				respApp.getEmail(), respApp.getRole().name());
